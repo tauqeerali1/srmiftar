@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SRM RAMADAN IFTAR</title>
+  <style>
+    body {
+      background-color: #f7f7f7;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 36px;
+      color: #333;
+      margin-top: 0;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 90%;
+      margin: 20px auto;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+    }
+
+    #attendance-table {
+      animation: fadeIn 1s;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    #count-attendance {
+      background-color: #0070C0;
+      color: white;
+      padding: 12px 24px;
+      font-size: 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      display: block;
+      margin: 20px auto;
+    }
+
+    #count-attendance:hover {
+      background-color: #004C80;
+    }
+
+    #result {
+      display: inline-block;
+      background-color: #0070C0;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px auto;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    #present, #absent {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .arrow {
+      width: 30px;
+      height: 30px;
+      padding: 5px;
+      border-radius: 50%;
+      background-color: #0070C0;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .arrow:hover {
+      background-color: #004C80;
+    }
+
+    #total-count {
+      font-weight: bold;
+      font-size: 36px;
+      margin: 0 20px;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    #date-container {
+      background-color: #0070C0;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      color: white;
+      margin: 20px auto;
+      max-width: 300px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    #date, #islamic-date {
+      font-size: 18px;
+      margin: 5px 0;
+    }
+
+    /* Responsive styles */
+    @media screen and (max-width: 768px) {
+      h1 {
+        font-size: 28px;
+      }
+
+      table {
+        width: 100%;
+      }
+
+      #count-attendance {
+        font-size: 16px;
+        padding: 10px 20px;
+      }
+
+      #result {
+        font-size: 18px;
+        padding: 15px;
+      }
+
+      #present, #absent {
+        font-size: 20px;
+      }
+
+      #total-count {
+        font-size: 28px;
+      }
+
+      .arrow {
+        width: 25px;
+        height: 25px;
+        padding: 3px;
+      }
+      #result {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background-color: #0070C0;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px auto;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      max-width: 400px; /* Adjust as needed */
+    }
+
+    #result-content {
+      margin: 0;
+    }
+    }
+  </style>
+</head>
+<body>
+  <h1>SRM RAMADAN IFTAR ATTENDANCE</h1>
+
+  <div id="date-container">
+    <p id="date"></p>
+    <p id="islamic-date"></p>
+  </div>
+
+  <table id="attendance-table">
+    <thead>
+      <tr>
+        <th>Roll No.</th>
+        <th>Status</th>
+        <th>Roll No.</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Loop to create rows for all students -->
+      <script>
+        for (var i = 1; i <= 78; i++) {
+          document.write("<tr>");
+          document.write("<td>" + i + "</td>");
+          document.write("<td><input type='checkbox' id='status_" + i + "' /></td>");
+          i++;
+          if (i <= 78) {
+            document.write("<td>" + i + "</td>");
+            document.write("<td><input type='checkbox' id='status_" + i + "' /></td>");
+          }
+          document.write("</tr>");
+        }
+      </script>
+    </tbody>
+  </table>
+
+  <div class="container">
+    <div id="decrement-count" class="arrow" onclick="decrementCount()">-</div>
+    <div id="total-count">Extra Count: <span id="count">0</span></div>
+    <div id="increment-count" class="arrow" onclick="incrementCount()">+</div>
+  </div>
+
+  <button id="count-attendance" onclick="countAttendance()">Count Attendance</button>
+
+  <div id="result">
+    <p id="result-content">RESULT <br /><br /> PRESENT ➡️ <span id="present"></span> <br /><br /> ABSENT ➡️ <span id="absent"></span></p>
+  </div>
+
+  <!-- importing roman date -->
+  <script>
+    var today = new Date();
+    var dateStr = today.toDateString();
+    var dateElem = document.getElementById("date");
+    dateElem.textContent = dateStr;
+  </script>
+
+  <!-- Include the moment.js and moment-hijri.js libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/moment/moment.min.js"></script>
+  <script src="https://unpkg.com/moment-hijri@2.1.2/moment-hijri.js"></script>
+
+  <!-- importing islamic dates -->
+  <script>
+    // Get the current date
+    var today = moment();
+
+    // Convert to Islamic date using moment-hijri.js library
+    var islamicDate = today.locale("en").format("iDD iMMMM iYYYY");
+
+    // Get the HTML element to display the date
+    var dateElem = document.getElementById("islamic-date");
+
+    // Set the text content of the element to the Islamic date string
+    dateElem.textContent = islamicDate + " AH";
+  </script>
+
+ 
+</body>
+</html>
